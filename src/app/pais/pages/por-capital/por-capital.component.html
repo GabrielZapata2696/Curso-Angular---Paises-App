@@ -1,1 +1,27 @@
-<p>por-capital works!</p>
+<div class="animate__animated animate__fadeIn">
+  <h2>Por Capital</h2>
+  <hr>
+
+  <div class="row ">
+    <div class="col">
+      <app-input-filtro (onEnter)="buscar($event)" placeholder="Buscar Capital..." (onDebounce)="sugerencias($event)">
+      </app-input-filtro>
+    </div>
+  </div>
+  <hr>
+</div>
+
+
+
+
+
+
+<div class="alert alert-danger" *ngIf="existeError">
+  No se encontraron resultados
+</div>
+
+<div class="row" *ngIf="paises.length > 0">
+  <div class="col">
+    <app-pais-tabla [paises]="paises"></app-pais-tabla>
+  </div>
+</div>

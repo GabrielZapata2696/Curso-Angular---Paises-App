@@ -1,1 +1,55 @@
-<p>por-region works!</p>
+<div class="animate__animated animate__fadeIn">
+  <h3>Por Región: <small>{{regionActiva | titlecase}} </small></h3>
+
+  <hr>
+  <h5>Seleccione la región:</h5>
+
+  <div class="row">
+    <div class="col">
+
+      <!-- [class.btn-primary]="region===regionActiva" -->
+      <!-- [ngClass]="{
+    'btn-primary': regionActiva === region,
+    'btn-outline-primary':regionActiva !== region
+    }" -->
+      <!-- [class]="(region ===regionActiva) ? 'btn btn-outline-primary : 'btn btn-primary' "' -->
+
+
+      <button *ngFor="let region of regiones" (click)="activarRegion(region)" [class]="getBotonActivoCss(region)">
+        {{region | titlecase }}
+      </button>
+
+
+    </div>
+  </div>
+
+</div>
+
+
+
+<br>
+
+<div class="">
+
+  <div class="row" *ngIf="paisesPrevFiltro.length > 0">
+    <div class="col">
+      <app-input-filtro (onEnter)="buscar([$event, false])" placeholder="Buscar País..."
+        (onDebounce)="sugerencias($event)" (onDelete)="buscar($event)">
+      </app-input-filtro>
+    </div>
+  </div>
+
+
+
+  <div class="alert alert-danger" *ngIf="paises.length < 1 && paisesPrevFiltro.length > 0 ">
+    No se encontraron resultados
+  </div>
+
+  <div class="row animate__animated animate__fadeIn" *ngIf="paisesPrevFiltro.length > 0 && paises.length > 0">
+    <div class="col">
+      <hr>
+      <app-pais-tabla [paises]="paises"></app-pais-tabla>
+    </div>
+  </div>
+
+</div>

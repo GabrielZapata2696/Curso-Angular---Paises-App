@@ -1,43 +1,37 @@
-<h2>Por pais</h2>
-<hr>
+<div class="animate__animated animate__fadeIn">
+  <h2>Por país</h2>
+  <hr>
 
-<div class="row">
-  <div class="col">
-    <form (ngSubmit)="buscar()" autocomplete="off">
-
-      <input type="text" placeholder="Filtro de busqueda..." name="termino" class="form-control" [(ngModel)]="filtro">
-
-    </form>
+  <div class="row">
+    <div class="col">
+      <app-input-filtro (onEnter)="buscar($event)" placeholder="Buscar País..." (onDebounce)="sugerencias($event)">
+      </app-input-filtro>
+    </div>
   </div>
+
+
+  <ul class="list-group" *ngIf="mostrarSugerencias && sugerencia !== ''">
+    <li class="list-group-item list-group-item-action" *ngFor="let pais of paisesSugeridos">
+      <a class="nav-link" [routerLink]="['/pais', pais.cca2]"> {{pais.name.official}}</a>
+    </li>
+    <li class="list-group-item list-group-item-action" (click)="buscarSugerido(sugerencia)">
+      <a class="nav-link"> Buscar "{{sugerencia}}" </a>
+    </li>
+  </ul>
+
+  <hr>
+
 </div>
 
 
-<hr>
-<div class="alert alert-danger">
+
+
+<div class="alert alert-danger" *ngIf="existeError">
   No se encontraron resultados
 </div>
 
-<div class="row">
+<div class="row" *ngIf="paises.length > 0">
   <div class="col">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Bandera</th>
-          <th>Nombre</th>
-          <th>Población</th>
-          <th>Más</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Bandera</td>
-          <td>Nombre</td>
-          <td>1234567890</td>
-          <td><a href="/pais/col">Ver</a></td>
-        </tr>
-      </tbody>
-    </table>
+    <app-pais-tabla [paises]="paises"></app-pais-tabla>
   </div>
 </div>
